@@ -82,7 +82,19 @@ app
 app.get("/bulk", async (c) => {
   const prisma = getPrisma(c.env.DATABASE_URL);
   try {
-    const res = await prisma.post.findMany({});
+    const res = await prisma.post.findMany({
+      select:{
+        title:true,
+        content:true,
+        published:true,
+        id:true,
+        author:{
+          select:{
+            name:true
+          }
+        }
+      }
+    });
     return c.json({ posts: res });
   } catch (error) {
     return c.json({ msg: "some internal error" });

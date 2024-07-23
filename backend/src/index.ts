@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import mainRouter from "./routes";
 import { verify } from "hono/jwt";
+import { cors } from "hono/cors";
 type Variables = {
   userId:(str: string) => string;
 };
@@ -10,6 +11,8 @@ const app = new Hono<{
   };
   Variables: Variables;
 }>();
+app.use("/*",cors())
+
 app.use("/api/v1/blog/*", async (c, next) => {
   const authHeader = c.req.header("Authorization") || "";
   if (!authHeader) {

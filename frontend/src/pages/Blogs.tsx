@@ -4,25 +4,29 @@ import { useBlogs } from "../hooks";
 
 const Blogs = () => {
   const { loading, blogs } = useBlogs();
-  if (loading) {
+  if (loading)
     return (
-      <div className="grid grid-cols-1 place-items-center">loading...</div>
+      <div className="flex place-items-center justify-center h-screen  ">
+        <div>loading...</div>
+      </div>
     );
-  }
+
   return (
     <div>
       <AppBar />
-      {(blogs.map((blog) => {
-        return (
-          <BlogCard
-            title={blog.title}
-            content={blog.content}
-            authorName={blog.author.name}
-            id={blog.id}
-            publishedDate="24-Feb-2021"
-          />
-        );
-      })).reverse()}
+      {blogs
+        .map((blog) => {
+          return (
+            <BlogCard
+              title={blog.title}
+              content={blog.content}
+              authorName={blog.author.name}
+              id={blog.id}
+              publishedDate="24-Feb-2021"
+            />
+          );
+        })
+        .reverse()}
     </div>
   );
 };

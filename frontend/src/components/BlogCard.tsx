@@ -16,7 +16,7 @@ const BlogCard = ({
 }: BlogCardProps) => {
   return (
     <div className="grid place-content-center ">
-      <Link className="" to={"/" + id}>
+      <Link className="" to={"/blog/" + id}>
         <div className="border-b-2 border-slate-100 max-w-xl cursor-pointer p-5   ">
           <div className="flex p-2">
             <div className="flex items-center justify-center">

@@ -107,12 +107,21 @@ app.get("/:id", async (c) => {
   try {
     const post = await prisma.post.findUnique({
       where: { id: id },
+      select:{
+        title:true,
+        content:true,
+        author:{
+          select:{
+            name:true
+          }
+        }
+      }
     });
     if (!post) {
       c.status(401);
       return c.json({ msg: "post not found" });
     }
-    return c.json({ post: { title: post.title, content: post.content } });
+    return c.json({ post: post });
   } catch (error) {
     return c.json({ msg: "some internal error" });
   }

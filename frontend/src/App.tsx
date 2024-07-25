@@ -3,6 +3,7 @@ import { Signin } from "./pages/Signin";
 import { Signup } from "./pages/Signup";
 import { Blog } from "./pages/Blog";
 import Blogs from "./pages/Blogs";
+import Editor from "./pages/Editor";
 
 function App() {
   return <div>
@@ -13,6 +14,7 @@ function App() {
       <Route path="/" element={<Signup/>}/>
       <Route path="/blog/:id" element={<Blog/>}/>
       <Route path="/blogs" element={<Blogs/>}/>
+      <Route path="/editor" element={<Editor/>}/>
     </Routes>
     </BrowserRouter>
   </div>;

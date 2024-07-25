@@ -7,8 +7,13 @@ const AppBar = () => {
       <Link to={"/blogs"}>
         <div className="text-2xl font-semibold">Medium</div>
       </Link>
-      <div>
-        <Avatar name="rahul" size="big" />
+      <div className="flex justify-end">
+        <Link to={"/editor"}>
+          <WriteButton />
+        </Link>
+        <div>
+          <Avatar name={"wfdd"} size="big" />
+        </div>
       </div>
     </div>
   );
@@ -36,5 +41,15 @@ const AppBar = () => {
 //     </div>
 //   );
 // }
+function WriteButton() {
+  return (
+    <button
+      type="button"
+      className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2"
+    >
+      Write
+    </button>
+  );
+}
 
 export default AppBar;

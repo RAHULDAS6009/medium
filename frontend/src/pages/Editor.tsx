@@ -1,10 +1,13 @@
 import axios from "axios";
 import { Editor } from "primereact/editor";
-import { useState } from "react";
+import {  useState } from "react";
 import { Backend_Url } from "../config";
 import { useNavigate } from "react-router-dom";
+import { useAuh } from "../hooks";
 
 const Publish = () => {
+
+  useAuh()
   return (
     <div className="flex place-items-center justify-center h-screen ">
       <TemplateDemo />
@@ -51,15 +54,17 @@ function TemplateDemo() {
         onChange={(e) => {
           setTitle(e.target.value);
         }}
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5     "
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-5 "
         placeholder="Title"
         required
       />
       <Editor
+     
         value={content}
         onTextChange={(e) => setContent(e.textValue || "")}
         headerTemplate={header}
-        style={{ height: "600px", width: "600px" }}
+        className="rounded-lg"
+        style={{ height: "400px", width: "600px" }}
       />
       <div>
         <button
@@ -69,7 +74,7 @@ function TemplateDemo() {
             sendRequest();
           }}
         >
-          Green
+          Publish
         </button>
       </div>
     </div>

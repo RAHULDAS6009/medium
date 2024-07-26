@@ -1,24 +1,33 @@
-/* eslint-disable no-undef */
+import { default as flattenColorPalette } from "tailwindcss/lib/util/flattenColorPalette";
+
 /** @type {import('tailwindcss').Config} */
-
-import flattenColorPalette from "tailwindcss/lib/util/flattenColorPalette";
-module.exports = {
-  content: [
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
-  darkMode: "class",
-  theme: {
-    extend: {},
+// eslint-disable-next-line no-undef
+export const content = [
+  // your paths
+  "./src/**/*.{ts,tsx}",
+];
+export const darkMode = "class";
+export const theme = {
+  extend: {
+    animation: {
+      aurora: "aurora 60s linear infinite",
+    },
+    keyframes: {
+      aurora: {
+        from: {
+          backgroundPosition: "50% 50%, 50% 50%",
+        },
+        to: {
+          backgroundPosition: "350% 50%, 350% 50%",
+        },
+      },
+    },
   },
-  plugins: [addVariablesForColors],
-  
 };
+export const plugins = [addVariablesForColors];
 
-
-function addVariablesForColors({ addBase, theme }) {
+// This plugin adds each Tailwind color as a global CSS variable, e.g. var(--gray-200).
+function addVariablesForColors({ addBase, theme }: any) {
   let allColors = flattenColorPalette(theme("colors"));
   let newVars = Object.fromEntries(
     Object.entries(allColors).map(([key, val]) => [`--${key}`, val])

@@ -1,19 +1,19 @@
 import AppBar from "../components/AppBar";
 import FullBlog from "../components/FullBlog";
-import {  Blog, useBlog } from "../hooks";
+import { Blog, useAuh, useBlog } from "../hooks";
 import { useParams } from "react-router-dom";
 const defaultBlog: Blog = {
   title: "Default Title",
   content: "Default content",
   author: {
-    name: "Default Author"
+    name: "Default Author",
   },
   id: "default-id",
-  published: false
+  published: false,
 };
 
-
 export const Blogpage = () => {
+  useAuh();
   const { id } = useParams();
   const { loading, blog } = useBlog({ id: id || "" });
 
@@ -23,9 +23,9 @@ export const Blogpage = () => {
 
   return (
     <div>
-      <AppBar/>
-      
-      <FullBlog blog={blog ??  defaultBlog} /> 
+      <AppBar />
+
+      <FullBlog blog={blog ?? defaultBlog} />
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Backend_Url } from "../config";
+import { useNavigate } from "react-router-dom";
 export interface Blog {
   title: string;
   content: string;
@@ -53,6 +54,26 @@ export const useBlog = ({ id }: { id: string }) => {
 
   return {
     loading,
-    blog
+    blog,
   };
+};
+
+export const useAuh = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/signin");
+    } else {
+      try {
+        axios.get(`${Backend_Url}/*`, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
+      } catch {
+        navigate("/*");
+      }
+    }
+  }, [navigate]);
 };

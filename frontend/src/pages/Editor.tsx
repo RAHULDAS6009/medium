@@ -1,23 +1,31 @@
 import axios from "axios";
 import { Editor } from "primereact/editor";
-import {  useState } from "react";
+import { useState } from "react";
 import { Backend_Url } from "../config";
 import { useNavigate } from "react-router-dom";
-import { useAuh } from "../hooks";
+import { useAuth } from "../hooks";
+import AppBar from "../components/AppBar";
+import { createPostInputType } from "@rahul405/med-common";
 
 const Publish = () => {
-
-  useAuh()
+  useAuth();
   return (
-    <div className="flex place-items-center justify-center h-screen ">
-      <TemplateDemo />
+    <div>
+      <AppBar />
+      <div className="flex place-items-center justify-center h-screen ">
+        <div className="rounded-lg ">
+          <TextEditor  />
+        </div>
+      </div>
     </div>
   );
 };
 
-function TemplateDemo() {
-  const [content, setContent] = useState("");
-  const [title, setTitle] = useState("");
+function TextEditor() {
+const [post,setPost]=useState<createPostInputType>({
+  title:"",
+  content:""
+})
   const navigate = useNavigate();
 
   const renderHeader = () => {
@@ -35,8 +43,7 @@ function TemplateDemo() {
     await axios.post(
       `${Backend_Url}/blog`,
       {
-        title,
-        content,
+       post
       },
       {
         headers: {
@@ -52,19 +59,26 @@ function TemplateDemo() {
       <input
         type="text"
         onChange={(e) => {
-          setTitle(e.target.value);
+        setPost({
+          ...post,
+          title:e.target.value
+        })
         }}
         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-5 "
         placeholder="Title"
         required
       />
       <Editor
-     
-        value={content}
-        onTextChange={(e) => setContent(e.textValue || "")}
+        value={post.content}
+        onTextChange={(e) => {
+          setPost({
+            ...post,
+            content:e.textValue ||" "
+          })
+          }}
         headerTemplate={header}
         className="rounded-lg"
-        style={{ height: "400px", width: "600px" }}
+        style={{ height: "400px", width: "600px" ,borderRadius:"0.5rem /* 8px */" }}
       />
       <div>
         <button
@@ -80,4 +94,5 @@ function TemplateDemo() {
     </div>
   );
 }
+
 export default Publish;

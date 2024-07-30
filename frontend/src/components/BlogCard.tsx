@@ -15,9 +15,9 @@ const BlogCard = ({
   id,
 }: BlogCardProps) => {
   return (
-    <div className="grid place-content-center ">
-      <Link className="" to={"/blog/" + id}>
-        <div className="border-b-2 border-slate-100 max-w-xl cursor-pointer p-5   ">
+    <div>
+      <div className="border-b-2 border-slate-100 max-w-xl cursor-pointer p-5  ">
+        <Link to={"/blog/" + id}>
           <div className="flex p-2">
             <div className="flex items-center justify-center">
               <Avatar size="small" name={authorName} />
@@ -39,8 +39,8 @@ const BlogCard = ({
           <div className="font-bold text-xs  text-slate-500 flex items-center p-2">
             {Math.ceil(content.length / 100) + " min read"}
           </div>
-        </div>
-      </Link>
+        </Link>
+      </div>
     </div>
   );
 };

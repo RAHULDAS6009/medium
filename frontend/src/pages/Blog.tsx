@@ -1,6 +1,7 @@
 import AppBar from "../components/AppBar";
+import BlogSkeleton from "../components/BlogSkeleton";
 import FullBlog from "../components/FullBlog";
-import { Blog, useAuh, useBlog } from "../hooks";
+import { Blog, useAuth, useBlog } from "../hooks";
 import { useParams } from "react-router-dom";
 const defaultBlog: Blog = {
   title: "Default Title",
@@ -13,12 +14,12 @@ const defaultBlog: Blog = {
 };
 
 export const Blogpage = () => {
-  useAuh();
+  useAuth();
   const { id } = useParams();
   const { loading, blog } = useBlog({ id: id || "" });
 
   if (loading) {
-    return <div>loading..........</div>;
+    return <div><BlogSkeleton/></div>;
   }
 
   return (

@@ -58,7 +58,7 @@ export const useBlog = ({ id }: { id: string }) => {
   };
 };
 
-export const useAuh = () => {
+export const useAuth = () => {
   const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -72,7 +72,7 @@ export const useAuh = () => {
           },
         });
       } catch {
-        navigate("/*");
+        navigate("/editor");
       }
     }
   }, [navigate]);

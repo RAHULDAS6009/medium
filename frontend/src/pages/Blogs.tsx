@@ -13,19 +13,17 @@ const Blogs = () => {
     <div>
       <AppBar />
       <div className="pl-96">
-        {blogs
-          .map((blog) => {
-            return (
-              <BlogCard
-                title={blog.title}
-                content={blog.content}
-                authorName={blog.author.name}
-                id={blog.id}
-                publishedDate="24-Feb-2021"
-              />
-            );
-          })
-          .reverse()}
+        {blogs.map((blog) => {
+          return (
+            <BlogCard
+              title={blog.title}
+              content={blog.content}
+              authorName={blog.author.name}
+              id={blog.id}
+              publishedDate="24-Feb-2021"
+            />
+          );
+        }).reverse()}
       </div>
     </div>
   );

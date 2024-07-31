@@ -3,8 +3,9 @@ import axios from "axios";
 import React, { ChangeEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Backend_Url } from "../config";
-import { Bounce, ToastContainer, toast } from "react-toastify";
+import {  ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { notify } from "../lib/utils";
 
 
 const Auth = ({ type }: { type: "signup" | "signin" }) => {
@@ -16,18 +17,7 @@ const Auth = ({ type }: { type: "signup" | "signin" }) => {
   const navigate = useNavigate();
 
 
-  const notify = () =>
-    toast.error(" Inputs are wrong", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-      transition: Bounce,
-    });
+
 
   async function sendRequest() {
     try {
@@ -36,12 +26,12 @@ const Auth = ({ type }: { type: "signup" | "signin" }) => {
         postInputs
       );
       const token = response.data.token;
-      console.log(response);
+     
       localStorage.setItem("token", token);
       navigate("/blogs");
     } catch (error) {
       //alert the user
-      notify();
+      notify("Inputs are wrong");
     }
   }
 

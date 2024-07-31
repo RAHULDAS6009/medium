@@ -14,6 +14,8 @@ const BlogCard = ({
   publishedDate,
   id,
 }: BlogCardProps) => {
+
+
   return (
     <div>
       <div className="border-b-2 border-slate-100 max-w-xl cursor-pointer p-5  ">

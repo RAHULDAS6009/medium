@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { getPrisma } from "../prismaClient";
-import { createPostInput } from "@rahul405/med-common";
-import { updatePostInput } from "@rahul405/med-common";
+
+import { createPostInput, updatePostInput } from "@rahul405/med-common";
 
 const app = new Hono<{
   Bindings: {
@@ -22,15 +22,20 @@ GET /api/v1/blog/bulk
 //create a blog a post
 app
   .post("/", async (c) => {
+  console.log("hello from post");
+
     const prisma = getPrisma(c.env.DATABASE_URL);
     const body = await c.req.json();
     const userId = c.get("userId");
     try {
+      console.log(body);
       const { success } = createPostInput.safeParse(body);
+
       if (!success) {
         c.status(411);
-        return c.json({ msg: "Inputs are not correct" });
+        return c.json({ msg: "your blog should have minimum 15 characters" });
       }
+       
 
       await prisma.post.create({
         data: {
@@ -40,8 +45,10 @@ app
           published: true,
         },
       });
+     
       return c.json({ msg: "new post create" });
     } catch (error) {
+      c.status(403)
       return c.json({ msg: "something is wrong" });
     }
   })
@@ -80,6 +87,7 @@ app
 
 //todo-pagination limit upto 10 post
 app.get("/bulk", async (c) => {
+  console.log("hello from bulk");
   const prisma = getPrisma(c.env.DATABASE_URL);
   try {
     const res = await prisma.post.findMany({

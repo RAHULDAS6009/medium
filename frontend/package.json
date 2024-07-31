@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@lexical/react": "^0.16.1",
-    "@rahul405/med-common": "^1.0.0",
+    "@rahul405/med-common": "^2.1.0",
     "axios": "^1.7.2",
     "clsx": "^2.1.1",
     "framer-motion": "^11.3.8",

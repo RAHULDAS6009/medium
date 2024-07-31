@@ -1,8 +1,8 @@
 import { Hono } from "hono";
 import { sign } from "hono/jwt";
 import { getPrisma } from "../prismaClient";
-import { signinInput } from "@rahul405/med-common";
-import { signupInput } from "@rahul405/med-common";
+import { signinInput, signupInput } from "@rahul405/med-common";
+
 
 const app = new Hono<{
   Bindings: {

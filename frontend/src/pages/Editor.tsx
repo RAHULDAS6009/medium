@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks";
 import AppBar from "../components/AppBar";
 import { createPostInputType } from "@rahul405/med-common";
+import { ToastContainer } from "react-toastify";
+import { notify } from "../lib/utils";
 
 const Publish = () => {
   useAuth();
@@ -14,7 +16,7 @@ const Publish = () => {
       <AppBar />
       <div className="flex place-items-center justify-center h-screen ">
         <div className="rounded-lg ">
-          <TextEditor  />
+          <TextEditor />
         </div>
       </div>
     </div>
@@ -22,10 +24,10 @@ const Publish = () => {
 };
 
 function TextEditor() {
-const [post,setPost]=useState<createPostInputType>({
-  title:"",
-  content:""
-})
+  const [post, setPost] = useState<createPostInputType>({
+    title: "",
+    content: "",
+  });
   const navigate = useNavigate();
 
   const renderHeader = () => {
@@ -40,18 +42,19 @@ const [post,setPost]=useState<createPostInputType>({
 
   const header = renderHeader();
   async function sendRequest() {
-    await axios.post(
-      `${Backend_Url}/blog`,
-      {
-       post
-      },
-      {
+    
+    try {
+      await axios.post(`${Backend_Url}/blog`, post, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
-      }
-    );
-    navigate("/blogs");
+      });
+      
+      
+      navigate("/blogs");
+    } catch (error) {
+      notify("Title must be 10 characters & content must be 50 character long");
+    }
   }
 
   return (
@@ -59,26 +62,30 @@ const [post,setPost]=useState<createPostInputType>({
       <input
         type="text"
         onChange={(e) => {
-        setPost({
-          ...post,
-          title:e.target.value
-        })
+          setPost({
+            ...post,
+            title: e.target.value,
+          });
         }}
         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-5 "
         placeholder="Title"
         required
       />
       <Editor
-        value={post.content}
+      value={post.content}
         onTextChange={(e) => {
           setPost({
             ...post,
-            content:e.textValue ||" "
-          })
-          }}
+            content: e.textValue,
+          });
+        }}
         headerTemplate={header}
         className="rounded-lg"
-        style={{ height: "400px", width: "600px" ,borderRadius:"0.5rem /* 8px */" }}
+        style={{
+          height: "400px",
+          width: "600px",
+          borderRadius: " 8px ",
+        }}
       />
       <div>
         <button
@@ -91,8 +98,21 @@ const [post,setPost]=useState<createPostInputType>({
           Publish
         </button>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </div>
   );
 }
+
 
 export default Publish;
